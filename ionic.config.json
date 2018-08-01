@@ -1,0 +1,7 @@
+{
+  "name": "MusicTracker",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
