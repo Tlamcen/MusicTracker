@@ -6,14 +6,14 @@
 
 <ion-content padding>
   <h2 weight="300">Last releases spotted</h2>
-  <ion-card>
+  <ion-card *ngFor="let release of lastReleases">
     <img src="../../assets/imgs/fir.jpg"/>
     <ion-card-content>
       <ion-card-title>
-        Falling In Reverse - Losing My Life
+        {{release.artistName}} - {{release.releaseName}}
         </ion-card-title>
       <p>
-        Released yesterday
+        {{release.releaseType}} released on {{release.releaseDate}}
       </p>
     </ion-card-content>
   </ion-card>
