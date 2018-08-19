@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { NativeStorage } from '@ionic-native/native-storage';
 import * as $ from "jquery";
 
 @Component({
@@ -8,32 +9,35 @@ import * as $ from "jquery";
 })
 export class SearchPage {
 
-  constructor(public navCtrl: NavController) {
+  accessToken:string = "";
 
-    //Ajax Query
-
-    /*$.ajax({
-      url: "http://ws.audioscrobbler.com/2.0/",
-      method: "GET",
-      data: {
-        method:"artist.getinfo",
-        artist:"Cher",
-        format:"json",
-        api_key:"2a303e8f8744fc9fa899b12d331a7146"
-      },
-      error: function() {
-        $('#info').html('<p>An error has occurred</p>');
-      },
-      dataType: 'jsonp',
-      success: function(data){
-        console.log("Great ! " + JSON.stringify(data));
-      }, 
-      type:'GET'
-    });*/
-
-
-
-
+  constructor(public navCtrl: NavController, private nativeStorage : NativeStorage) {
+    this.nativeStorage.getItem('accessToken').then((value) => {
+      this.accessToken = value;
+    });
   }
-
+  onInput(event)
+  {
+    console.log("onInput event triggered");
+    $.ajax({
+      method:"GET",
+      headers: {
+        "Authorization": this.accessToken,
+        "Content-Type":"application/json",
+      },
+      url: "https://api.spotify.com/v1/search",
+      dataType : "json",
+      data: {
+        q : "*" + event.target.value + "*",
+        type : "artist"
+      }
+    }).then((data) => {
+      console.log("Search completed ! " + data);
+    },(error) => {
+      $('#info').html('<p>An error has occurred</p>');
+    });
+  }
+  onCancel(event){
+    console.log("onCancel event triggered");
+  }
 }
