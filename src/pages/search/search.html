@@ -6,7 +6,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="card-background-page">
+
   <ion-searchbar
     (ionInput)="onInput($event)"
     (ionCancel)="onCancel($event)"
@@ -14,4 +15,13 @@
     type="text"
     animated=true>
   </ion-searchbar>
+
+  <div *ngIf="artistsQueryResult && artistsQueryResult.artists && artistsQueryResult.artists.items.length > 0">
+    <ion-card *ngFor="let artist of artistsQueryResult.artists.items">
+      <img *ngIf="artist.images[0]" src="{{artist.images[0].url}}">
+      <div class="card-title">{{artist.name}}</div>
+      <div class="card-subtitle">{{artist.genres[0]}}</div>
+    </ion-card>
+  </div>
+
 </ion-content>
