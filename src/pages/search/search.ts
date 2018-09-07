@@ -11,10 +11,16 @@ export class SearchPage {
 
   accessToken : string = "";
   artistsQueryResult : Object = {};
+  artistsFollowed : Array<any> = [];
 
   constructor(public navCtrl: NavController, private nativeStorage : NativeStorage) {
     this.nativeStorage.getItem('accessToken').then((value) => {
       this.accessToken = value;
+    });
+    this.nativeStorage.getItem('artistsFollowed').then((value) => {
+      this.artistsFollowed = JSON.parse(value);
+    },(error) => {
+      console.log("There is no artistsFollowed value in storage or plugin is not loaded");
     });
   }
 
@@ -61,5 +67,32 @@ export class SearchPage {
     {
       this.artistsQueryResult = {};
     }
+  }
+
+  AddOrRemoveArtistFromList(artist)
+  {
+    let index = this.isArtistFollowed(artist.id);
+    if(index !== -1)
+    {
+      this.artistsFollowed.splice(index,1);
+    }
+    else
+    {
+      this.artistsFollowed.push(artist);
+    }
+    this.nativeStorage.setItem('artistsFollowed', JSON.stringify(this.artistsFollowed));
+    console.log(this.artistsFollowed.toString());
+  }
+
+  isArtistFollowed(artistID)
+  {
+    for(let i=0; i<this.artistsFollowed.length; i++)
+    {
+      if(this.artistsFollowed[i].id && this.artistsFollowed[i].id === artistID)
+      {
+        return i;
+      }
+    }
+    return -1;
   }
 }

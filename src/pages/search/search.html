@@ -17,8 +17,10 @@
   </ion-searchbar>
 
   <div *ngIf="artistsQueryResult && artistsQueryResult.artists && artistsQueryResult.artists.items.length > 0">
-    <ion-card *ngFor="let artist of artistsQueryResult.artists.items">
-      <img *ngIf="artist.images[0]" src="{{artist.images[0].url}}">
+    <ion-card (click)="AddOrRemoveArtistFromList(artist)" *ngFor="let artist of artistsQueryResult.artists.items">
+      <ion-icon class="card-add-icon" *ngIf="isArtistFollowed(artist.id)===-1" name="add-circle"></ion-icon>
+      <ion-icon class="card-remove-icon" *ngIf="isArtistFollowed(artist.id)>-1" name="remove-circle"></ion-icon>
+      <img class="card-background-img" *ngIf="artist.images[0]" src="{{artist.images[0].url}}">
       <div class="card-title">{{artist.name}}</div>
       <div class="card-subtitle">{{artist.genres[0]}}</div>
     </ion-card>

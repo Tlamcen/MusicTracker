@@ -8,16 +8,17 @@ import { NativeStorage } from '@ionic-native/native-storage';
 })
 export class ArtistsPage {
 
-  artists:Array<string> = [];
+  artistsFollowed:Array<string> = [];
 
   constructor(public navCtrl: NavController, private nativeStorage : NativeStorage) {
 
-    this.nativeStorage.getItem('artists').then((value) => {
-      var artists : Array<string> = JSON.parse(value);
-      this.artists = artists;
+    this.nativeStorage.getItem('artistsFollowed').then((value) => {
+      this.artistsFollowed = JSON.parse(value);
     },(error) => {
-      console.log("There is no artists value in storage or plugin is not loaded");
+      console.log("There is no artistsFollowed value in storage or plugin is not loaded");
     });
   }
+
+  //TODO : Add ion-refresher to be able to refresh artistsFollowed list
 
 }

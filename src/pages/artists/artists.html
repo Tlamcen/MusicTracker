@@ -7,8 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngIf="artists.length !== 0">
-    <ion-card *ngFor="let artists of artists">
+  <div *ngIf="artistsFollowed.length !== 0">
+    <ion-card *ngFor="let artist of artistsFollowed">
         <ion-card-content>
           <ion-card-title>
             {{artist}}
@@ -16,7 +16,7 @@
         </ion-card-content>
     </ion-card>
   </div>
-  <div *ngIf="artists.length === 0">
+  <div *ngIf="artistsFollowed.length === 0">
     <h4>You have no followed artists yet. Select your favorites artists in the Search tab !</h4>
   </div>
 </ion-content>
