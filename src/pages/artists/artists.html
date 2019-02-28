@@ -8,12 +8,12 @@
 
 <ion-content padding>
   <div *ngIf="artistsFollowed.length !== 0">
-    <ion-card *ngFor="let artist of artistsFollowed">
-        <ion-card-content>
-          <ion-card-title>
-            {{artist}}
-          </ion-card-title>
-        </ion-card-content>
+    <ion-card (click)="AddOrRemoveArtistFromList(artist)" *ngFor="let artist of artistsFollowed">
+        <ion-icon class="card-add-icon" *ngIf="isArtistFollowed(artist.id)===-1" name="add-circle"></ion-icon>
+        <ion-icon class="card-remove-icon" *ngIf="isArtistFollowed(artist.id)>-1" name="remove-circle"></ion-icon>
+        <img class="card-background-img" *ngIf="artist.images[0]" src="{{artist.images[0].url}}">
+        <div class="card-title">{{artist.name}}</div>
+        <div class="card-subtitle">{{artist.genres[0]}}</div>
     </ion-card>
   </div>
   <div *ngIf="artistsFollowed.length === 0">
